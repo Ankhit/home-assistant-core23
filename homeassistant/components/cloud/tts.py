@@ -4,6 +4,10 @@ from __future__ import annotations
 
 import logging
 from typing import Any
+from typing import Final
+
+# Define a constant for the name
+HA_CLOUD_NAME: Final = "Home Assistant Cloud"
 
 from hass_nabucasa import Cloud
 from hass_nabucasa.voice import MAP_VOICE, TTS_VOICES, AudioOutput, Gender, VoiceError
@@ -118,7 +122,7 @@ async def async_setup_entry(
 class CloudTTSEntity(TextToSpeechEntity):
     """Home Assistant Cloud text-to-speech entity."""
 
-    _attr_name = "Home Assistant Cloud"
+    _attr_name = HA_CLOUD_NAME
     _attr_unique_id = TTS_ENTITY_UNIQUE_ID
 
     def __init__(self, cloud: Cloud[CloudClient]) -> None:
@@ -221,7 +225,7 @@ class CloudProvider(Provider):
     def __init__(self, cloud: Cloud[CloudClient]) -> None:
         """Initialize cloud provider."""
         self.cloud = cloud
-        self.name = "Home Assistant Cloud"
+        self.name = HA_CLOUD_NAME
         self._language, self._voice = cloud.client.prefs.tts_default_voice
         cloud.client.prefs.async_listen_updates(self._sync_prefs)
 
@@ -313,7 +317,7 @@ def handle_deprecated_gender(
         breaks_in_ha_version="2024.10.0",
         translation_key="deprecated_gender",
         translation_placeholders={
-            "integration_name": "Home Assistant Cloud",
+            "integration_name": HA_CLOUD_NAME,
             "deprecated_option": "gender",
             "replacement_option": "voice",
         },

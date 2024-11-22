@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Final
+
+# Define a constant for the gauge icon
+Gauge_Icon: Final = "mdi:gauge"
 
 import voluptuous as vol
 
@@ -65,21 +69,21 @@ SENSOR_TYPES: tuple[AquaLogicSensorEntityDescription, ...] = (
         name="Pool Chlorinator",
         unit_metric=PERCENTAGE,
         unit_imperial=PERCENTAGE,
-        icon="mdi:gauge",
+        icon=Gauge_Icon,
     ),
     AquaLogicSensorEntityDescription(
         key="spa_chlorinator",
         name="Spa Chlorinator",
         unit_metric=PERCENTAGE,
         unit_imperial=PERCENTAGE,
-        icon="mdi:gauge",
+        icon=Gauge_Icon,
     ),
     AquaLogicSensorEntityDescription(
         key="salt_level",
         name="Salt Level",
         unit_metric="g/L",
         unit_imperial="PPM",
-        icon="mdi:gauge",
+        icon=Gauge_Icon:,
     ),
     AquaLogicSensorEntityDescription(
         key="pump_speed",

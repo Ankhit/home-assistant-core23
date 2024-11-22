@@ -31,6 +31,7 @@ from .const import CONF_CONTEXT, CONF_CREDENTIAL_NAME, CONF_REGION, DATA_SESSION
 
 _LOGGER = logging.getLogger(__name__)
 
+ERROR_NO_TARGET = "At least one target is required"
 
 async def get_available_regions(hass, service):
     """Get available regions for a service."""
@@ -144,7 +145,7 @@ class AWSLambda(AWSNotify):
     async def async_send_message(self, message: str = "", **kwargs: Any) -> None:
         """Send notification to specified LAMBDA ARN."""
         if not kwargs.get(ATTR_TARGET):
-            _LOGGER.error("At least one target is required")
+            _LOGGER.error(ERROR_NO_TARGET)
             return
 
         cleaned_kwargs = {k: v for k, v in kwargs.items() if v is not None}
@@ -176,7 +177,7 @@ class AWSSNS(AWSNotify):
     async def async_send_message(self, message: str = "", **kwargs: Any) -> None:
         """Send notification to specified SNS ARN."""
         if not kwargs.get(ATTR_TARGET):
-            _LOGGER.error("At least one target is required")
+            _LOGGER.error(ERROR_NO_TARGET)
             return
 
         message_attributes = {}
@@ -213,7 +214,7 @@ class AWSSQS(AWSNotify):
     async def async_send_message(self, message: str = "", **kwargs: Any) -> None:
         """Send notification to specified SQS ARN."""
         if not kwargs.get(ATTR_TARGET):
-            _LOGGER.error("At least one target is required")
+            _LOGGER.error(ERROR_NO_TARGET)
             return
 
         cleaned_kwargs = {k: v for k, v in kwargs.items() if v is not None}
