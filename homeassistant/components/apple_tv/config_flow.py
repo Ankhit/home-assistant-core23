@@ -2,7 +2,7 @@
 from typing import Final
 
 from __future__ import annotations
-UNEXPECTED_EXCEPTION: Final = "Unexpected exception"
+UNEXPECTED_EXCEPTIONS: Final = "Unexpected exception"
 import asyncio
 from collections import deque
 from collections.abc import Awaitable, Callable, Mapping
@@ -186,7 +186,7 @@ class AppleTVConfigFlow(ConfigFlow, domain=DOMAIN):
             except DeviceAlreadyConfigured:
                 errors["base"] = "already_configured"
             except Exception:
-                _LOGGER.exception(UNEXPECTED_EXCEPTION)
+                _LOGGER.exception(UNEXPECTED_EXCEPTIONS)
                 errors["base"] = "unknown"
             else:
                 await self.async_set_unique_id(
@@ -331,7 +331,7 @@ class AppleTVConfigFlow(ConfigFlow, domain=DOMAIN):
         except DeviceAlreadyConfigured:
             return self.async_abort(reason="already_configured")
         except Exception:
-            _LOGGER.exception(UNEXPECTED_EXCEPTION)
+            _LOGGER.exception(UNEXPECTED_EXCEPTIONS)
             return self.async_abort(reason="unknown")
 
         return await next_func()
@@ -474,7 +474,7 @@ class AppleTVConfigFlow(ConfigFlow, domain=DOMAIN):
             _LOGGER.exception("Authentication problem")
             abort_reason = "invalid_auth"
         except Exception:
-            _LOGGER.exception(UNEXPECTED_EXCEPTION)
+            _LOGGER.exception(UNEXPECTED_EXCEPTIONS)
             abort_reason = "unknown"
 
         if abort_reason:
@@ -516,7 +516,7 @@ class AppleTVConfigFlow(ConfigFlow, domain=DOMAIN):
                 _LOGGER.exception("Authentication problem")
                 errors["base"] = "invalid_auth"
             except Exception:
-                _LOGGER.exception(UNEXPECTED_EXCEPTION)
+                _LOGGER.exception(UNEXPECTED_EXCEPTIONS)
                 errors["base"] = "unknown"
 
         return self.async_show_form(

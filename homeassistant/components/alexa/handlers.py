@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from typing import Any, Final
-Alexa_Thermostat_namespace: Final = "Alexa.ThermostatController"
+Alexa_Thermostat_namespaces: Final = "Alexa.ThermostatController"
 from collections.abc import Callable, Coroutine
 import logging
 import math
@@ -831,7 +831,7 @@ def temperature_from_object(
     return TemperatureConverter.convert(temp, from_unit, to_unit)
 
 
-@HANDLERS.register((Alexa_Thermostat_namespace, "SetTargetTemperature"))
+@HANDLERS.register((Alexa_Thermostat_namespaces, "SetTargetTemperature"))
 async def async_api_set_target_temp(
     hass: ha.HomeAssistant,
     config: AbstractConfig,
@@ -858,7 +858,7 @@ async def async_api_set_target_temp(
         response.add_context_property(
             {
                 "name": "targetSetpoint",
-                "namespace": Alexa_Thermostat_namespace,
+                "namespace": Alexa_Thermostat_namespaces,
                 "value": {"value": temp, "scale": API_TEMP_UNITS[unit]},
             }
         )
@@ -870,7 +870,7 @@ async def async_api_set_target_temp(
         response.add_context_property(
             {
                 "name": "lowerSetpoint",
-                "namespace": Alexa_Thermostat_namespace,
+                "namespace": Alexa_Thermostat_namespaces,
                 "value": {"value": temp_low, "scale": API_TEMP_UNITS[unit]},
             }
         )
@@ -882,7 +882,7 @@ async def async_api_set_target_temp(
         response.add_context_property(
             {
                 "name": "upperSetpoint",
-                "namespace": Alexa_Thermostat_namespace,
+                "namespace": Alexa_Thermostat_namespaces,
                 "value": {"value": temp_high, "scale": API_TEMP_UNITS[unit]},
             }
         )
@@ -900,7 +900,7 @@ async def async_api_set_target_temp(
     return response
 
 
-@HANDLERS.register((Alexa_Thermostat_namespace, "AdjustTargetTemperature"))
+@HANDLERS.register((Alexa_Thermostat_namespaces, "AdjustTargetTemperature"))
 async def async_api_adjust_target_temp(
     hass: ha.HomeAssistant,
     config: AbstractConfig,
@@ -941,14 +941,14 @@ async def async_api_adjust_target_temp(
         response.add_context_property(
             {
                 "name": "upperSetpoint",
-                "namespace": Alexa_Thermostat_namespace,
+                "namespace": Alexa_Thermostat_namespaces,
                 "value": {"value": target_temp_high, "scale": API_TEMP_UNITS[unit]},
             }
         )
         response.add_context_property(
             {
                 "name": "lowerSetpoint",
-                "namespace": Alexa_Thermostat_namespace,
+                "namespace": Alexa_Thermostat_namespaces,
                 "value": {"value": target_temp_low, "scale": API_TEMP_UNITS[unit]},
             }
         )
@@ -968,7 +968,7 @@ async def async_api_adjust_target_temp(
         response.add_context_property(
             {
                 "name": "targetSetpoint",
-                "namespace": Alexa_Thermostat_namespace,
+                "namespace": Alexa_Thermostat_namespaces,
                 "value": {"value": target_temp, "scale": API_TEMP_UNITS[unit]},
             }
         )
@@ -986,7 +986,7 @@ async def async_api_adjust_target_temp(
     return response
 
 
-@HANDLERS.register((Alexa_Thermostat_namespace, "SetThermostatMode"))
+@HANDLERS.register((Alexa_Thermostat_namespaces, "SetThermostatMode"))
 async def async_api_set_thermostat_mode(
     hass: ha.HomeAssistant,
     config: AbstractConfig,
@@ -1052,7 +1052,7 @@ async def async_api_set_thermostat_mode(
     response.add_context_property(
         {
             "name": "thermostatMode",
-            "namespace": Alexa_Thermostat_namespace,
+            "namespace": Alexa_Thermostat_namespaces,
             "value": mode,
         }
     )
