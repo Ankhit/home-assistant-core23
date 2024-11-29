@@ -193,3 +193,4 @@ async def test_integration_create_and_delete_todo_items():
     assert coordinator.api.insert.call_count == 2
     coordinator.api.delete.assert_called_once_with("list_id", ["task1", "task2"])
     assert coordinator.async_refresh.call_count == 3
+
