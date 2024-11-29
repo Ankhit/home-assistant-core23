@@ -2232,20 +2232,37 @@ def _initialize_database(session: Session) -> bool:
     version 1 are present to make the determination. Eventually this logic
     can be removed and we can assume a new db is being created.
     """
-    inspector = sqlalchemy.inspect(session.connection())
-    indexes = inspector.get_indexes("events")
+    inspector = None
+    try:
+        inspector = sqlalchemy.inspect(session.connection())
+        indexes = inspector.get_indexes("events")
 
-    for index in indexes:
-        if index["column_names"] in (["time_fired"], ["time_fired_ts"]):
-            # Schema addition from version 1 detected. New DB.
-            session.add(StatisticsRuns(start=get_start_time()))
-            session.add(SchemaChanges(schema_version=SCHEMA_VERSION))
-            return True
+        for index in indexes:
+            if index["column_names"] in (["time_fired"], ["time_fired_ts"]):
+                # Schema addition from version 1 detected. New DB.
+                session.add(StatisticsRuns(start=get_start_time()))
+                session.add(SchemaChanges(schema_version=SCHEMA_VERSION))
+                _LOGGER.debug("New database initialized with schema version 1")
+                return True
 
-    # Version 1 schema changes not found, this db needs to be migrated.
-    current_version = SchemaChanges(schema_version=0)
-    session.add(current_version)
-    return True
+    # Version 1 schema changes not found; this db needs to be migrated.
+        current_version = SchemaChanges(schema_version=0)
+        session.add(current_version)
+        _LOGGER.debug("Existing database detected; schema version 0 recorded")
+        return False  # Return False as the schema is outdated and needs migration
+
+    except SQLAlchemyError as e:
+        _LOGGER.error("Failed to initialize the database: %s", e)
+        session.rollback()  # Rollback any changes in case of error
+        return False  # Return False in case of any errors during initialization.
+
+    else:
+        _LOGGER.info("Database initialization process completed")  # Moved to else block
+
+    finally:
+        # Ensure inspector is cleaned up if necessary
+        if inspector is not None:
+            inspector.clear_cache()  # Safely clear the inspector's cache
 
 
 def initialize_database(session_maker: Callable[[], Session]) -> bool:

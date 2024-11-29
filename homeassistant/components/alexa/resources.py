@@ -2,6 +2,11 @@
 
 from typing import Any, Final
 
+
+Type_Keys: Final = "@type"
+
+
+
 # Define a constant for the TYPE_KEYS key
 TYPE_KEYS: Final = "@type"
 
@@ -237,10 +242,17 @@ class AlexaCapabilityResource:
         label_dict: dict[str, Any]
         for label in resources:
             if label in AlexaGlobalCatalog.__dict__.values():
+ date_time_recognization
                 label_dict = {TYPE_KEYS: "asset", "value": {"assetId": label}}
             else:
                 label_dict = {
                     TYPE_KEYS: "text",
+
+                label_dict = {Type_Keys: "asset", "value": {"assetId": label}}
+            else:
+                label_dict = {
+                    Type_Keys: "text",
+ dev
                     "value": {"text": label, "locale": "en-US"},
                 }
 
@@ -403,7 +415,11 @@ class AlexaSemantics:
     def add_states_to_value(self, states: list[str], value: Any) -> None:
         """Add StatesToValue stateMappings."""
         self._add_state_mapping(
+
             {TYPE_KEYS: self.STATES_TO_VALUE, "states": states, "value": value}
+=======
+            {Type_Keys: self.STATES_TO_VALUE, "states": states, "value": value}
+
         )
 
     def add_states_to_range(
@@ -412,7 +428,11 @@ class AlexaSemantics:
         """Add StatesToRange stateMappings."""
         self._add_state_mapping(
             {
+ 
                 TYPE_KEYS: self.STATES_TO_RANGE,
+
+                Type_Keys: self.STATES_TO_RANGE,
+ 
                 "states": states,
                 "range": {"minimumValue": min_value, "maximumValue": max_value},
             }
@@ -424,7 +444,11 @@ class AlexaSemantics:
         """Add ActionsToDirective actionMappings."""
         self._add_action_mapping(
             {
+ 
                 TYPE_KEYS: self.ACTIONS_TO_DIRECTIVE,
+
+                Type_Keys: self.ACTIONS_TO_DIRECTIVE,
+
                 "actions": actions,
                 "directive": {"name": directive, "payload": payload},
             }

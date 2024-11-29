@@ -3,6 +3,9 @@ config2/*
 
 tests/testing_config/deps
 tests/testing_config/home-assistant.log*
+dembaEnv/
+homeassistant-venv/
+myNewEnv/
 
 # hass-release
 data/
