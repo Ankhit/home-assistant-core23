@@ -250,4 +250,5 @@ def _order_tasks(tasks: list[dict[str, Any]]) -> list[dict[str, Any]]:
     sorted_incomplete = sorted(incomplete_tasks, key=sort_key)
     sorted_completed = sorted(completed_tasks, key=sort_key)
 
+
     return sorted_completed + sorted_incomplete
